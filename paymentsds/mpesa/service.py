@@ -1,3 +1,5 @@
+import constants
+
 class Service:
   def __init__(self, **args):
     pass
@@ -27,23 +29,20 @@ class Service:
     return 'error'
 
   def handle_receive(self, data):
-    self.handle_request(self.DEFAULT_OPERATIONS['C2B_PAYMENT'], data)
+    self.handle_request(constants.DEFAULT_OPERATIONS['C2B_PAYMENT'], data)
 
   def handle_query(self, data):
-    self.handle_request(self.DEFAULT_OPERATIONS['QUERY_TRANSACTION_STATUS'], data)
+    self.handle_request(constants.DEFAULT_OPERATIONS['QUERY_TRANSACTION_STATUS'], data)
 
   def handle_revert(self, data):
-    self.handle_request(self.DEFAULT_OPERATIONS['REVERSAL'], data)
+    self.handle_request(constants.DEFAULT_OPERATIONS['REVERSAL'], data)
 
   def detect_operation(self, data):
-    phone_number = re.compile('^((00|\+)?258)?8[45][0-9]{7}$')
-    service_provider_code = re.compile('^[0-9]{5,6}$')
+    if constants.PATTERNS['PHONE_NUMBER'].match(data['to'])
+      return constants.DEFAULT_OPERATIONS['B2C_PAYMENT']
 
-    if phone_number.match(data['to'])
-      return self.DEFAULT_OPERATIONS['B2C_PAYMENT']
-
-    if service_provider_code.match(data['to'])
-      return self.DEFAULT_OPERATIONS['B2B_PAYMENT']
+    if constants.PATTERNS['SERVICE_PROVIDER_CODE'].match(data['to'])
+      return constants.DEFAULT_OPERATIONS['B2B_PAYMENT']
 
     return None
 
@@ -51,18 +50,18 @@ class Service:
     errors = []
 
     for k, v in data.items():
-      regex = re.compile(operation.expects['mapping']['validation'][k])
+      regex = operation['validation'][k]
       if not regex.match(v):
         errors.append(k)
 
     return errors
 
   def detect_missing_properties(self, operation, data):
-    required_properties = set(operation.expects['mapping']['required']) + set(operation.expects['mapping']['optional'])
+    required_properties = set(operation['required'])
     given_properties = set(data.items())
     missing_properties = required - given_properties
 
-    return list(missing)
+    return list(missing_properties)
 
   def fill_optional_properties(self, operation, data)
     def complete_to(to_complete):
