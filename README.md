@@ -1,23 +1,33 @@
-# MPesa SDK for Python
+# M-Pesa SDK for Python
 
-MPesa Python SDK is an unofficial library to help developers integrating every [MPesa](https://developer.mpesa.vm.co.mz) operations to their Python applications.
+M-Pesa SDK for Python is an unofficial library aiming to help develbusinesses integrating every [M-Pesa](https://developer.mpesa.vm.co.mz) operations to their Python applications.
 
 ## Contents
 
 1. [Features](#features)
-1. [Requirements](#requirements)
-1. [Configuration](#configuration)
 1. [Usage](#usage)
-   1. [Quickstart](#contributing)
-   1. [Examples](#contributing)
+   1. [Quickstart](#usage/scenario-1)
+   1. [Receive Money from a Mobile Account](#usage/scenario-1)
+   1. [Send Money to a Mobile Account](#usage/scenario-2)
+   1. [Send Money to a Business Account](#usage/scenario-3)
+   1. [Revert a Transaction](#usage/scenario-4)
+   1. [Query the Status of a Transaction](#usage/scenario-5)
+   1. [Examples](#usage/scenario-6)
+1. [Prerequisites](#prerequisites)
 1. [Installation](#installation)
-   1. [Using Rubygems](#installation-rubygems)
-   1. [Using Bundler](#installation-bundler)
-   1. [Manual Installation](#installation-manual)
-1. [Related Projects](#related)
-   1. [Dependencies](#contributing)
-   1. [Friends](#contributing)
-   1. [Alternatives](#contributing)
+   1. [Installation Scenario 1](#installation/scenario-1)
+   1. [Installation Scenario 2](#installation/scenario-2)
+   1. [Installation Scenario 3](#installation/scenario-3)
+   1. [Installation Scenario 4](#installation/scenario-4)
+1. [Configuration](#configuration)
+   1. [Configuration Scenario 1](#configuration/scenario-1)
+   1. [Configuration Scenario 2](#configuration/scenario-2)
+   1. [Configuration Scenario 3](#configuration/scenario-3)
+   1. [Configuration Scenario 4](#configuration/scenario-4)
+1. [Related Projects](#related-projects)
+   1. [Dependencies](#related-projects/dependencies)
+   1. [Friends](#related-projects/friends)
+   1. [Alternatives](#related-projects/alternatives)
 1. [Contributing](#contributing)
 1. [Changelog](#changelog)
 1. [Authors](#authors)
@@ -25,246 +35,88 @@ MPesa Python SDK is an unofficial library to help developers integrating every [
 1. [License](#license)
 
 ## Features <a name="features"></a>
-- Receive money from a mobile account to a business account (C2B)
-- Send money from a business account to a mobile account (B2C)
-- Send money from a business account to a another business account (B2B)
-- Revert a transaction (Reversal)
-- Query the status of a transaction (Query transaction status)
 
-## Requirements <a name="requirements"></a>
-
-- [Ruby](https://www.ruby-lang.org)
-- [Rubygems](https://rubygems.org)
-- [Bundler](https://bundler.io/)
+- Receive money from a mobile account to a business account
+- Send money from a business account to a mobile account
+- Send money from a business account to a another business account
+- Revert a transaction
+- Query the status of a transaction
 
 ## Usage <a name="usage"></a>
-### Quickstart <a name="usage-quickstart"></a>
-```python
-from paymentsds.mpesa import Client
 
-client = Client(
-    api_key = '',
-    public_key = '',
+### Quickstart <a name="#usage/scenario-1"></a>
 
-)
+### Receive Money from a Mobile Account <a name="#usage/scenario-2"></a>
 
-data = {
-    'from': '84XXXXXX',
-    'amount': '10',
-    'transaction': 'TX',
-    'reference': 'REF'
-}
+### Send Money to a Mobile Account <a name="#usage/scenario-3"></a>
 
-result = client.receive(data)
+### Send Money to a Business Account <a name="#usage/scenario-4"></a>
 
-if result.is_success:
-    puts result.data
-```
+### Revert a Transaction <a name="#usage/scenario-5"></a>
 
-### Receive money from a mobile wallet
+### Query the Status of a Transaction <a name="#usage/scenario-6"></a>
 
-```python
-from paymentsds.mpesa import Client
+### Examples <a name="usage/scenario-7"></a>
 
-client = Client(
-    api_key = '',
-    public_key = '',
-
-)
-
-data = {
-    'from': '84XXXXXX',
-    'amount': '10',
-    'transaction': 'TX',
-    'reference': 'REF'
-}
-
-result = client.receive(data)
-
-if result.is_success:
-    puts result.data
-```
-
-### Send money to a mobile wallet
-
-```python
-from paymentsds.mpesa import Client
-
-client = Client(
-    api_key = '',
-    public_key = '',
-
-)
-
-data = {
-    'from': '84XXXXXX',
-    'amount': '10',
-    'transaction': 'TX',
-    'reference': 'REF'
-}
-
-result = client.receive(data)
-
-if result.is_success:
-    puts result.data
-```
-
-### Send money to a business wallet
-
-```python
-from paymentsds.mpesa import Client
-
-client = Client(
-    api_key = '',
-    public_key = '',
-
-)
-
-data = {
-    'from': '84XXXXXX',
-    'amount': '10',
-    'transaction': 'TX',
-    'reference': 'REF'
-}
-
-result = client.receive(data)
-
-if result.is_success:
-    puts result.data
-```
-
-### Revert a transaction
-
-```python
-from paymentsds.mpesa import Client
-
-client = Client(
-    api_key = '',
-    public_key = '',
-
-)
-
-data = {
-    'from': '84XXXXXX',
-    'amount': '10',
-    'transaction': 'TX',
-    'reference': 'REF'
-}
-
-result = client.receive(data)
-
-if result.is_success:
-    puts result.data
-```
-
-### Query the status of a transaction
-
-```python
-from paymentsds.mpesa import Client
-
-client = Client(
-    api_key = '',
-    public_key = '',
-
-)
-
-data = {
-    'from': '84XXXXXX',
-    'amount': '10',
-    'transaction': 'TX',
-    'reference': 'REF'
-}
-
-result = client.receive(data)
-
-if result.is_success:
-    puts result.data
-```
-
-### Examples <a name="usage-examples"></a>
-- [Make C2B transaction](examples/c2b_payment.rb)
-- [Make B2C transaction](examples/b2c_payment.rb)
-- [Make B2B transaction](examples/b2b_payment.rb)
-- [Revert a transaction](examples/reversal.rb)
-- [Query transaction status](examples/query_transaction_status.rb)
+## Prerequisites <a name="prerequisites"></a>
 
 ## Installation <a name="installation"></a>
-### Using Rubygems <a name="installation-rubygems"></a>
-```bash
-$ gem install paymentsds-mpesa
-```
 
-### Using Bundler <a name="installation-rubygems"></a>
-```ruby
-# Gemfile
-pip install paymentsds-mpesa'
-```
+### Installation Scenario 1 <a name="installation/scenario-1"></a>
 
-```bash
-$ pip install paymentsds-mpesa
-```
+### Installation Scenario 2 <a name="installation/scenario-2"></a>
 
-### Manual Installation <a name="installation-manual"></a>
-```bash
-$ git clone https://github.com/paymentsds/mpesa-ruby-sdk.git
-$ cd mpesa-js-sdk
-$ bundle exec rake build
-$ bundle exec rake install
-```
+### Installation Scenario 3 <a name="installation/scenario-3"></a>
 
 ## Configuration <a name="configuration"></a>
-The complete set of configurations looks like this:
 
-```ruby
-require 'paysuite/mpesa'
+### Configuration Scenario 1 <a name="configuration/scenario-1"></a>
 
-client = Paysuite::MPesa::Client.new do |config|
-    config.api_key = '<REPLACE>'
-    config.public_key = '<REPLACE>'
-    config.service_provider_code = '<REPLACE>'
-    config.debugging = true
-    config.verify_ssl = false
-    config.environment = :sandbox
-end
-```
+### Configuration Scenario 2 <a name="configuration/scenario-2"></a>
 
-The minimal configuration is:
-```ruby
-require 'paysuite/mpesa'
+### Configuration Scenario 3 <a name="configuration/scenario-3"></a>
 
-client = Paysuite::MPesa::Client.new do |config|
-    config.api_key = '<REPLACE>'
-    config.public_key = '<REPLACE>'
-end
-```
+## Related Projects <a name="related-projects"></a>
 
-Or if you have pre-calculated the access token offline:
+### Dependencies <a name="related-projects/dependencies"></a>
 
-```ruby
-require 'paysuite/mpesa'
+#### Production Dependencies
 
-client = Paysuite::MPesa::Client.new do |config|
-	config.access_token = '<REPLACE>'
-end
-```
+- [Dependency 1](https://github.com/<username>/<project>)
+- [Dependency 2](https://github.com/<username>/<project>)
+- [Dependency 3](https://github.com/<username>/<project>)
+- [Dependency 4](https://github.com/<username>/<project>)
 
-## Related Projects <a name="related"></a>
+#### Development Dependencies
 
-### Dependencies <a name="related-dependencies"></a>
-- [Faraday](https://github.com/lostisland/faraday)
+- [Dependency 1](https://github.com/<username>/<project>)
+- [Dependency 2](https://github.com/<username>/<project>)
+- [Dependency 3](https://github.com/<username>/<project>)
+- [Dependency 4](https://github.com/<username>/<project>)
 
-### Friends <a name="related-friends"></a>
-TODO: 
+### Friends <a name="related-projects/friends"></a>
 
-### Alternatives <a name="related-alternatives"></a>
-TODO: 
+- [M-Pesa SDK for Javascript](https://github.com/paymentsds/mpesa-js-sdk)
+- [M-Pesa SDK for PHP](https://github.com/paymentsds/mpesa-php-sdk)
+- [M-Pesa SDK for Ruby](https://github.com/paymentsds/mpesa-ruby-sdk)
+- [M-Pesa SDK for Python](https://github.com/paymentsds/mpesa-python-sdk)
+
+### Alternatives <a name="related-projects/alternatives"></a>
+
+- [Alternative 1](https://github.com/<username>/<project>)
+- [Alternative 2](https://github.com/<username>/<project>)
+- [Alternative 3](https://github.com/<username>/<project>)
+- [Alternative 4](https://github.com/<username>/<project>)
+
 
 ### Inspiration
+
 - [rosariopfernandes/mpesa-node-api](https://github.com/abdulmueid/mpesa-php-api)
 - [karson/mpesa-php-sdk](https://github.com/karson/mpesa-php-sdk)
 - [codeonweekends/mpesa-php-sdk](https://github.com/codeonweekends/mpesa-php-sdk)
 - [abdulmueid/mpesa-php-api](https://github.com/abdulmueid/mpesa-php-api)
 - [realdm/mpesasdk](https://github.com/realdm/mpesasdk)
+
 
 ## Contributing <a name="contributing"></a>
 
