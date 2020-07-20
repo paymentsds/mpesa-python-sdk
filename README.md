@@ -1,6 +1,6 @@
-# MPesa Ruby SDK
+# MPesa SDK for Python
 
-Ruby client for the [Vodacom M-Pesa API](https://developers.mpesa.vm.co.mz).
+MPesa Python SDK is an unofficial library to help developers integrating every [MPesa](https://developer.mpesa.vm.co.mz) operations to their Python applications.
 
 ## Contents
 
