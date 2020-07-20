@@ -40,7 +40,7 @@ MPesa Python SDK is an unofficial library to help developers integrating every [
 ## Usage <a name="usage"></a>
 ### Quickstart <a name="usage-quickstart"></a>
 ```python
-from paysuite.mpesa import Client
+from paymentsds.mpesa import Client
 
 client = Client(
     api_key = '',
@@ -64,7 +64,7 @@ if result.is_success:
 ### Receive money from a mobile wallet
 
 ```python
-from paysuite.mpesa import Client
+from paymentsds.mpesa import Client
 
 client = Client(
     api_key = '',
@@ -88,7 +88,7 @@ if result.is_success:
 ### Send money to a mobile wallet
 
 ```python
-from paysuite.mpesa import Client
+from paymentsds.mpesa import Client
 
 client = Client(
     api_key = '',
@@ -112,7 +112,7 @@ if result.is_success:
 ### Send money to a business wallet
 
 ```python
-from paysuite.mpesa import Client
+from paymentsds.mpesa import Client
 
 client = Client(
     api_key = '',
@@ -136,7 +136,7 @@ if result.is_success:
 ### Revert a transaction
 
 ```python
-from paysuite.mpesa import Client
+from paymentsds.mpesa import Client
 
 client = Client(
     api_key = '',
@@ -160,7 +160,7 @@ if result.is_success:
 ### Query the status of a transaction
 
 ```python
-from paysuite.mpesa import Client
+from paymentsds.mpesa import Client
 
 client = Client(
     api_key = '',
@@ -191,22 +191,22 @@ if result.is_success:
 ## Installation <a name="installation"></a>
 ### Using Rubygems <a name="installation-rubygems"></a>
 ```bash
-$ gem install paysuite-mpesa
+$ gem install paymentsds-mpesa
 ```
 
 ### Using Bundler <a name="installation-rubygems"></a>
 ```ruby
 # Gemfile
-pip install paysuite-mpesa'
+pip install paymentsds-mpesa'
 ```
 
 ```bash
-$ pip install paysuite-mpesa
+$ pip install paymentsds-mpesa
 ```
 
 ### Manual Installation <a name="installation-manual"></a>
 ```bash
-$ git clone https://github.com/paysuite/mpesa-ruby-sdk.git
+$ git clone https://github.com/paymentsds/mpesa-ruby-sdk.git
 $ cd mpesa-js-sdk
 $ bundle exec rake build
 $ bundle exec rake install
