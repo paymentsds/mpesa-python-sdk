@@ -66,7 +66,7 @@ try:
    }
 
    result = client.send
-exception:
+except:
    print('Operation failed')
 
 ```
