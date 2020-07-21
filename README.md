@@ -65,7 +65,7 @@ try:
       'amount': '10'             # input_Amount
    }
 
-   result = client.send
+   result = client.receive(payment_data)
 except:
    print('Operation failed')
 
