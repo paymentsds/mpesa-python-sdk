@@ -73,6 +73,29 @@ except:
 
 ### Send Money to a Mobile Account <a name="#usage/scenario-3"></a>
 
+```python
+from paymentsds.mpesa import Client
+
+client = Client(
+   api_key='<REPLACE>',              # API Key
+   public_key='<REPLACE>',           # Public Key
+   service_provider_code='<REPLACE>' # input_ServiceProviderCode
+)
+
+try:
+   payment_data = {
+      'to': '841234567',         # input_CustomerMSISDN
+      'reference': '11114',      # input_ThirdPartyReference
+      'transaction': 'T12344CC', # input_TransactionReference
+      'amount': '10'             # input_Amount
+   }
+
+   result = client.send(payment_data)
+except:
+   print('Operation failed')
+
+```
+
 ### Send Money to a Business Account <a name="#usage/scenario-4"></a>
 
 ### Revert a Transaction <a name="#usage/scenario-5"></a>
