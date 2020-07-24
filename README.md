@@ -158,10 +158,18 @@ except:
 
 ## Installation <a name="installation"></a>
 
-### Using PIP <a name="installation/scenario-1"></a>
+### Using pip <a name="installation/scenario-1"></a>
 
 ```bash
-pip install paymentsds-mpesa
+$ pip install paymentsds-mpesa
+```
+
+```txt
+paymentsds-mpesa
+```
+
+```bash
+$ pip install -r requirements.txt
 ```
 
 ### Installation Scenario 2 <a name="installation/scenario-2"></a>
