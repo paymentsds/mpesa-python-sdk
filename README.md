@@ -153,7 +153,7 @@ except:
 
 ## Prerequisites <a name="prerequisites"></a>
 
-- [Python 3.5+](www.python.org)
+- [Python 3.5+](https://www.python.org)
 - [PIP](https://pip.pypa.io)
 
 ## Installation <a name="installation"></a>
