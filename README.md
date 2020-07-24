@@ -15,7 +15,7 @@ M-Pesa SDK for Python is an unofficial library aiming to help develbusinesses in
    1. [Examples](#usage/scenario-6)
 1. [Prerequisites](#prerequisites)
 1. [Installation](#installation)
-   1. [Installation Scenario 1](#installation/scenario-1)
+   1. [Using PIP](#installation/scenario-1)
    1. [Installation Scenario 2](#installation/scenario-2)
    1. [Installation Scenario 3](#installation/scenario-3)
    1. [Installation Scenario 4](#installation/scenario-4)
