@@ -153,6 +153,9 @@ except:
 
 ## Prerequisites <a name="prerequisites"></a>
 
+- [Python 3.5+](www.python.org)
+- [PIP](https://pip.pypa.io)
+
 ## Installation <a name="installation"></a>
 
 ### Installation Scenario 1 <a name="installation/scenario-1"></a>
