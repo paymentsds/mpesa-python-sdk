@@ -12,7 +12,7 @@ class Configuration:
   ]
 
   def __init__(self, **kwargs):
-    self.user_agent = 'Paysuite/MPesa'
+    self.user_agent = 'Paymentsds/M-Pesa'
     self.timeout = 0
     self.verify_ssl = False
     self.debugging = True
