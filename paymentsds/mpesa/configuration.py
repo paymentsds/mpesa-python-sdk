@@ -1,3 +1,5 @@
+from .environment import Environment
+
 class Configuration:
   PARAMS = [
     'user_agent',
