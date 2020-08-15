@@ -1,6 +1,8 @@
+from .service import Service
+
 class Client:
   def __init__(self,**kwargs):
-    pass
+    self.service = Service(**kwargs)
 
   def send(self, data):
     return self.service.handle_send(data)
@@ -12,5 +14,5 @@ class Client:
   def revert(self, data):
     return self.service.handle_revert(data)
 
-  def query(self, data);
+  def query(self, data):
     return self.service.handle_query(data)

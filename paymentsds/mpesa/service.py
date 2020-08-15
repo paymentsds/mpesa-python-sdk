@@ -1,4 +1,5 @@
-import constants
+#import .constants
+from .configuration import Configuration
 
 class Service:
   def __init__(self, **args):
