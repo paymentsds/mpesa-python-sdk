@@ -2,8 +2,8 @@
 from .configuration import Configuration
 
 class Service:
-  def __init__(self, **args):
-    pass
+  def __init__(self, **kwargs):
+    self.config = Configuration(**kwargs)
 
   def handle_request(self, opcode, intent):
     data = self.fill_optional_properties(opcode, intent)
