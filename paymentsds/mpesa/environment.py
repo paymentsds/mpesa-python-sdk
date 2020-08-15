@@ -13,6 +13,6 @@ class Environment:
 				self.__dict__[key] = value
 
 	@staticmethod
-	def from_url(self, url):
+	def from_url(url):
 		parts = url.split('://')
-		return Environment(scheme=parts[0], domain=domain[1])
+		return Environment(scheme=parts[0], domain=parts[1])

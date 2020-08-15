@@ -22,5 +22,7 @@ class Configuration:
       if key in self.PARAMS:
         if key == 'host':
           self.environment = Environment.from_url(value)
+        elif key == 'environment':
+          self.environment = Environment.from_url(value)
         else:
           self.__dict__[key] = value
