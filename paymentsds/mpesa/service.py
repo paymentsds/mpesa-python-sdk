@@ -1,9 +1,9 @@
 from .configuration import Configuration
 from .exceptions import *
 from .constants import *
+from .response import Response
 
 import requests
-from pprint import pprint
 
 class Service:
   def __init__(self, **kwargs):
@@ -158,7 +158,11 @@ class Service:
           else:
             response = requests.post(request_data['url'], headers=headers, json=body)
 
-        return response
+        if response.status_code >= 200 and response.status_code < 300:
+          return Response(True, response.json())
+        else:
+          return Response(False, response.json())
+
       else:
         raise AuthenticationError()
     else:
