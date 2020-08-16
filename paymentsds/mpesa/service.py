@@ -1,5 +1,9 @@
-#import .constants
 from .configuration import Configuration
+from .exceptions import *
+from .constants import *
+
+import requests
+from pprint import pprint
 
 class Service:
   def __init__(self, **kwargs):
@@ -8,47 +12,43 @@ class Service:
   def handle_request(self, opcode, intent):
     data = self.fill_optional_properties(opcode, intent)
 
-    missing_properties = self.detecting_missing_properties(opcode, data)
+    missing_properties = self.detect_missing_properties(opcode, data)
     if len(missing_properties):
-        # return errors
+      raise MissingPropertyError()
 
     errors = self.detect_errors(opcode, data)
     if len(errors):
-        # return errors
+      raise ValidationError()
 
-    # continue
-    def build_request:
-        pass
-
-    def make_request:
-        pass
+    return self.perform_request(opcode, data)
 
   def handle_send(self, data):
-    operation = self.detect_operation(data)
-    if operation
-        self.handle_request(operation, data)
+    opcode = self.detect_operation(data)
+    if opcode:
+        self.handle_request(opcode, data)
     return 'error'
-
+    
   def handle_receive(self, data):
-    self.handle_request(constants.DEFAULT_OPERATIONS['C2B_PAYMENT'], data)
+    self.handle_request('C2B_PAYMENT', data)
 
   def handle_query(self, data):
-    self.handle_request(constants.DEFAULT_OPERATIONS['QUERY_TRANSACTION_STATUS'], data)
+    self.handle_request('QUERY_TRANSACTION_STATUS', data)
 
   def handle_revert(self, data):
-    self.handle_request(constants.DEFAULT_OPERATIONS['REVERSAL'], data)
+    self.handle_request('REVERSAL', data)
 
   def detect_operation(self, data):
-    if constants.PATTERNS['PHONE_NUMBER'].match(data['to'])
-      return constants.DEFAULT_OPERATIONS['B2C_PAYMENT']
+    if PATTERNS['PHONE_NUMBER'].match(data['to']):
+      return 'B2C_PAYMENT'
 
-    if constants.PATTERNS['SERVICE_PROVIDER_CODE'].match(data['to'])
-      return constants.DEFAULT_OPERATIONS['B2B_PAYMENT']
+    if PATTERNS['SERVICE_PROVIDER_CODE'].match(data['to']):
+      return 'B2B_PAYMENT'
 
     return None
 
-  def detect_errors(self, operation, data):
+  def detect_errors(self, opcode, data):
     errors = []
+    operation = DEFAULT_OPERATIONS[opcode]
 
     for k, v in data.items():
       regex = operation['validation'][k]
@@ -57,100 +57,125 @@ class Service:
 
     return errors
 
-  def detect_missing_properties(self, operation, data):
+  def detect_missing_properties(self, opcode, data):
+    operation = DEFAULT_OPERATIONS[opcode]
     required_properties = set(operation['required'])
-    given_properties = set(data.items())
-    missing_properties = required - given_properties
+    given_properties = set(data.keys())
+    missing_properties = required_properties - given_properties
 
     return list(missing_properties)
 
-  def fill_optional_properties(self, operation, data)
+  def fill_optional_properties(self, opcode, data):
     def complete_to(to_complete):
       if 'to' not in to_complete.keys():
-        if 'service_provider_code' in self.config.__dict__.keys()
+        if 'service_provider_code' in self.config.__dict__.keys():
           to_complete['to'] = self.config.service_provider_code
 
       return to_complete
 
-      def complete_from(to_complete):
-        if 'from' not in to_complete.keys():
-          if 'service_provider_code' in self.config.__dict__.keys()
-            to_complete['from'] = self.config.service_provider_code
+    def complete_from(to_complete):
+      if 'from' not in to_complete.keys():
+        if 'service_provider_code' in self.config.__dict__.keys():
+          to_complete['from'] = self.config.service_provider_code
 
-        return to_complete
+      return to_complete
 
-      def complete_reversal_data(to_complete):
-        if 'initiator_identifier' not in to_complete.keys():
-          if 'service_provider_code' in self.config.__dict__.keys()
-            to_complete['to'] = self.config.service_provider_code
+    def complete_reversal(to_complete):
+      if 'to' not in to_complete.keys():
+        if 'service_provider_code' in self.config.__dict__.keys():
+          to_complete['to'] = self.config.service_provider_code
 
-        if 'initiator_identifier' not in to_complete.keys():
-          if 'initiator_identifier' in self.config.__dict__.keys()
-            to_complete['initiator_identifier'] = self.config.initiator_identifier
+      if 'initiator_identifier' not in to_complete.keys():
+        if 'initiator_identifier' in self.config.__dict__.keys():
+          to_complete['initiator_identifier'] = self.config.initiator_identifier
 
-        if 'security_credetial' not in to_complete.keys():
-          if 'security_credetial' in self.config.__dict__.keys()
-            to_complete['security_credetial'] = self.config.security_credetial
+      if 'security_credential' not in to_complete.keys():
+        if 'security_credential' in self.config.__dict__.keys():
+          to_complete['security_credential'] = self.config.security_credential
 
-        return to_complete
+      return to_complete
 
-      if operation is self.DEFAULT_OPERATION['C2B_PAYMENT']:
-        return complete_to(data)
-      elif operation in self.DEFAULT_OPERATION['B2B_PAYMENT']:
-        return complete_from(data)
-      elif operation is self.DEFAULT_OPERATION['B2C_PAYMENT']:
-        return complete_from(data)
-      elif operation is self.DEFAULT_OPERATION['REVERSAL']:
-        return = complete_reversal_data(data)
-      elif operation is self.DEFAULT_OPERATION['QUERY_TRANSACTION_STATUS']:
-        return complete_to(data)
-      else:
-        return data
+    def complete_query_transaction_status(to_complete):
+      if 'from' not in to_complete.keys():
+        if 'service_provider_code' in self.config.__dict__.keys():
+          to_complete['from'] = self.config.service_provider_code
 
-  def perform_request(opcode, intent):
+      return to_complete
+
+    if opcode == 'C2B_PAYMENT':
+      return complete_to(data)
+    elif opcode == 'B2B_PAYMENT':
+      return complete_from(data)
+    elif opcode == 'B2C_PAYMENT':
+      return complete_from(data)
+    elif opcode == 'REVERSAL':
+      return complete_reversal(data)
+    elif opcode == 'QUERY_TRANSACTION_STATUS':
+      return complete_query_transaction_status(data)
+    else:
+      return data
+
+  def perform_request(self, opcode, intent):
     self.generate_access_token()
 
     if hasattr(self.config, 'environment'):
       if hasattr(self.config, 'auth'):
-        operation = self.DEFAULT_OPERATION[opcode]
+        operation = DEFAULT_OPERATIONS[opcode]
         headers = self.build_request_headers()
-        body = build_request_body(opcode, intent)
+        body = self.build_request_body(opcode, intent)
 
         request_data = {
-          'base_url': '{}://{}',
+          'base_url': '{}://{}'.format(self.config.environment.scheme, self.config.environment.domain),
           'path': operation['path'],
           'method': operation['method'],
           'headers': headers,
         }
 
-        if operation['method'] == 'post'
-          request_data['data'] = body
-        else
+        request_data['url'] = '{}:{}{}'.format(request_data['base_url'], operation['port'], operation['path'])
+
+        response = None
+        if operation['method'] == 'GET':
           request_data['params'] = body
+          
+          response = requests.get(request_data['url'], headers=headers, params=body, timeout=self.config.timeout)
+        elif operation['method'] == 'PUT':
+          request_data['data'] = body
+        
+          response = requests.put(request_data['url'], headers=headers, json=body, timeout=self.config.timeout)
+        else:  
+          request_data['data'] = body
+          
+          response = requests.post(request_data['url'], headers=headers, json=body, timeout=self.config.timeout)
 
-        return request_data
+        print(self.config.auth)
+        pprint(response.__dict__)
+        return response
       else:
-        return {
-          'error': [
-          'No auth'
-          ]
-        }
+        raise AuthenticationError()
     else:
-      return {
-        'error': [
-        'No environment'
-        ]
-      }
+      raise InvalidHostError()
 
-  def generate_access_token():
+  def generate_access_token(self):
     self.config.generate_access_token()
 
-  def build_request_headers():
+  def build_request_headers(self):
     return {
       'User-Agent': self.config.user_agent,
       'Origin': self.config.origin,
       'Authorization': 'Bearer {}'.format(self.config.auth)
     }
 
-  def build_request_body(opcode, intent):
-    pass
+  def build_request_body(self, opcode, intent):
+    body = {}
+
+    for old_key, v in intent.items():
+      new_key = DEFAULT_OPERATIONS[opcode]['mapping'][old_key]
+      if (opcode == 'C2B_PAYMENT' and old_key == 'from') or (opcode == 'B2C_PAYMENT' and old_key == 'to'):
+        body[new_key] = self.normalize_phone_number(intent[old_key])
+      else:
+        body[new_key] = intent[old_key]
+    
+    return body
+
+  def normalize_phone_number(self, str):
+    return str

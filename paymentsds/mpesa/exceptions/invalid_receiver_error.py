@@ -1,0 +1,2 @@
+class InvalidReceiverError(Exception):
+  pass
