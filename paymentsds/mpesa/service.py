@@ -162,7 +162,6 @@ class Service:
           return Response(True, response.json())
         else:
           return Response(False, response.json())
-
       else:
         raise AuthenticationError()
     else:
