@@ -204,7 +204,6 @@ $ pip install -r requirements.txt
 - [M-Pesa SDK for Javascript](https://github.com/paymentsds/mpesa-js-sdk)
 - [M-Pesa SDK for PHP](https://github.com/paymentsds/mpesa-php-sdk)
 - [M-Pesa SDK for Ruby](https://github.com/paymentsds/mpesa-ruby-sdk)
-- [M-Pesa SDK for Python](https://github.com/paymentsds/mpesa-python-sdk)
 
 ### Alternatives <a name="related-projects/alternatives"></a>
 
