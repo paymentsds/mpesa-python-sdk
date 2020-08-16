@@ -25,17 +25,17 @@ class Service:
   def handle_send(self, data):
     opcode = self.detect_operation(data)
     if opcode:
-        self.handle_request(opcode, data)
-    return 'error'
+        return self.handle_request(opcode, data)
+    raise InvalidREceiverError()
     
   def handle_receive(self, data):
-    self.handle_request('C2B_PAYMENT', data)
+    return self.handle_request('C2B_PAYMENT', data)
 
   def handle_query(self, data):
-    self.handle_request('QUERY_TRANSACTION_STATUS', data)
+    return self.handle_request('QUERY_TRANSACTION_STATUS', data)
 
   def handle_revert(self, data):
-    self.handle_request('REVERSAL', data)
+    return self.handle_request('REVERSAL', data)
 
   def detect_operation(self, data):
     if PATTERNS['PHONE_NUMBER'].match(data['to']):
@@ -137,15 +137,26 @@ class Service:
         if operation['method'] == 'GET':
           request_data['params'] = body
           
-          response = requests.get(request_data['url'], headers=headers, params=body, timeout=self.config.timeout)
+          if self.config.timeout > 0:
+            response = requests.get(request_data['url'], headers=headers, params=body, timeout=self.config.timeout)
+          else:
+            response = requests.get(request_data['url'], headers=headers, params=body)
+
         elif operation['method'] == 'PUT':
           request_data['data'] = body
         
-          response = requests.put(request_data['url'], headers=headers, json=body, timeout=self.config.timeout)
+          if self.config.timeout > 0:
+            response = requests.put(request_data['url'], headers=headers, json=body, timeout=self.config.timeout)
+          else:
+            response = requests.put(request_data['url'], headers=headers, json=body)
+        
         else:  
           request_data['data'] = body
           
-          response = requests.post(request_data['url'], headers=headers, json=body, timeout=self.config.timeout)
+          if self.config.timeout > 0:
+            response = requests.post(request_data['url'], headers=headers, json=body, timeout=self.config.timeout)
+          else:
+            response = requests.post(request_data['url'], headers=headers, json=body)
 
         return response
       else:
