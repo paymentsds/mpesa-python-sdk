@@ -12,6 +12,10 @@ setup_args = dict(
     packages=[
         "paymentsds",
         "paymentsds/mpesa"
+    ],
+    install_requires=[
+        'requests>=2.0.0',
+        'pycryptodome'
     ]
 )
 
