@@ -1,13 +1,15 @@
+from collections import namedtuple
+
 class Response:
     def __init__(self, status, data):
         self.success = status
-        self.status = {
-            'code': data['output_ResponseCode'],
-            'description': data['output_ResponseDesc']
-        }
-        self.data = {
-            'transaction': data['output_TransactionID'],
-            'conversation': data['output_ConversationID'],
-            'reference': data['output_ThirdPartyReference'],
-        }
-    
+        self.status = namedtuple('ResponseStatus', 'code description')(
+            data['output_ResponseCode'],
+            data['output_ResponseDesc']
+        )
+
+        self.data = namedtuple('ResponseData' , 'transaction conversation reference')(
+            data['output_TransactionID'],
+            data['output_ConversationID'],
+            data['output_ThirdPartyReference']
+        )
