@@ -147,8 +147,6 @@ class Service:
           
           response = requests.post(request_data['url'], headers=headers, json=body, timeout=self.config.timeout)
 
-        print(self.config.auth)
-        pprint(response.__dict__)
         return response
       else:
         raise AuthenticationError()
