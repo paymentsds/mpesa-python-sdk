@@ -139,25 +139,25 @@ class Service:
           request_data['params'] = body
           
           if self.config.timeout > 0:
-            response = requests.get(request_data['url'], headers=headers, params=body, timeout=self.config.timeout)
+            response = requests.get(request_data['url'], headers=headers, params=body, timeout=self.config.timeout, verify=self.config.verify_ssl)
           else:
-            response = requests.get(request_data['url'], headers=headers, params=body)
+            response = requests.get(request_data['url'], headers=headers, params=bod, verify=self.config.verify_ssl)
 
         elif operation['method'] == 'PUT':
           request_data['data'] = body
         
           if self.config.timeout > 0:
-            response = requests.put(request_data['url'], headers=headers, json=body, timeout=self.config.timeout)
+            response = requests.put(request_data['url'], headers=headers, json=body, timeout=self.config.timeout, verify=self.config.verify_ssl)
           else:
-            response = requests.put(request_data['url'], headers=headers, json=body)
+            response = requests.put(request_data['url'], headers=headers, json=body, verify=self.config.verify_ssl)
         
         else:  
           request_data['data'] = body
           
           if self.config.timeout > 0:
-            response = requests.post(request_data['url'], headers=headers, json=body, timeout=self.config.timeout)
+            response = requests.post(request_data['url'], headers=headers, json=body, timeout=self.config.timeout, verify=self.config.verify_ssl)
           else:
-            response = requests.post(request_data['url'], headers=headers, json=body)
+            response = requests.post(request_data['url'], headers=headers, json=body, verify=self.config.verify_ssl)
 
         if response.status_code >= 200 and response.status_code < 300:
           return Response(True, response.json())
