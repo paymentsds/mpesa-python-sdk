@@ -16,6 +16,8 @@ class Configuration:
     'environment',
     'host',
     'service_provider_code',
+    'initiator_identifier',
+    'security_credential',
     'origin'
   ]
 
