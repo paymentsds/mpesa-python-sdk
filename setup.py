@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup_args = dict(
     name='paymentsds-mpesa',
-    version='0.1a4',
+    version='0.1da6',
     description='MPesa Python SDK',
     license='Apache-2.0',
     author='Edson Michaque',
