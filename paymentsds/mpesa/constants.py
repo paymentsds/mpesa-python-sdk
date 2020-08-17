@@ -67,7 +67,7 @@ DEFAULT_OPERATIONS = {
   'B2C_PAYMENT': {
       'method': 'POST',
       'port':'18345',
-      'path':'/ipg/v1x/b2cPayment',
+      'path':'/ipg/v1x/b2cPayment/',
       'mapping': {
         'from': 'input_ServiceProviderCode',
         'to': 'input_CustomerMSISDN',
