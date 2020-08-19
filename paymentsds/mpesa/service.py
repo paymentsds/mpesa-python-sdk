@@ -4,7 +4,6 @@ from .constants import *
 from .response import Response
 
 import requests
-from pprint import pprint
 
 class Service:
   def __init__(self, **kwargs):
@@ -15,6 +14,7 @@ class Service:
 
     missing_properties = self.detect_missing_properties(opcode, data)
     if len(missing_properties):
+      print(missing_properties)
       raise MissingPropertyError()
 
     errors = self.detect_errors(opcode, data)
@@ -27,7 +27,7 @@ class Service:
     opcode = self.detect_operation(data)
     if opcode:
         return self.handle_request(opcode, data)
-    raise InvalidREceiverError()
+    raise InvalidReceiverError()
     
   def handle_receive(self, data):
     return self.handle_request('C2B_PAYMENT', data)
@@ -122,42 +122,31 @@ class Service:
     if hasattr(self.config, 'environment'):
       if hasattr(self.config, 'auth'):
         operation = DEFAULT_OPERATIONS[opcode]
+        
         headers = self.build_request_headers()
         body = self.build_request_body(opcode, intent)
 
-        request_data = {
-          'base_url': '{}://{}'.format(self.config.environment.scheme, self.config.environment.domain),
-          'path': operation['path'],
-          'method': operation['method'],
-          'headers': headers,
-        }
-
-        request_data['url'] = '{}:{}{}'.format(request_data['base_url'], operation['port'], operation['path'])
-
-        response = None
-        if operation['method'] == 'GET':
-          request_data['params'] = body
-          
+        url = '{}://{}:{}{}'.format(self.config.environment.scheme, self.config.environment.domain, operation['port'], operation['path'])
+        
+        if operation['method'] == 'GET':         
           if self.config.timeout > 0:
-            response = requests.get(request_data['url'], headers=headers, params=body, timeout=self.config.timeout, verify=self.config.verify_ssl)
+            response = requests.get(url, headers=headers, params=body, timeout=self.config.timeout, verify=self.config.verify_ssl)
           else:
-            response = requests.get(request_data['url'], headers=headers, params=bod, verify=self.config.verify_ssl)
+            response = requests.get(url, headers=headers, params=body, verify=self.config.verify_ssl)
 
         elif operation['method'] == 'PUT':
-          request_data['data'] = body
         
           if self.config.timeout > 0:
-            response = requests.put(request_data['url'], headers=headers, json=body, timeout=self.config.timeout, verify=self.config.verify_ssl)
+            response = requests.put(url, headers=headers, json=body, timeout=self.config.timeout, verify=self.config.verify_ssl)
           else:
-            response = requests.put(request_data['url'], headers=headers, json=body, verify=self.config.verify_ssl)
+            response = requests.put(url, headers=headers, json=body, verify=self.config.verify_ssl)
         
         else:  
-          request_data['data'] = body
           
           if self.config.timeout > 0:
-            response = requests.post(request_data['url'], headers=headers, json=body, timeout=self.config.timeout, verify=self.config.verify_ssl)
+            response = requests.post(url, headers=headers, json=body, timeout=self.config.timeout, verify=self.config.verify_ssl)
           else:
-            response = requests.post(request_data['url'], headers=headers, json=body, verify=self.config.verify_ssl)
+            response = requests.post(url, headers=headers, json=body, verify=self.config.verify_ssl)
 
         if response.status_code >= 200 and response.status_code < 300:
           return Response(True, response.json())
@@ -175,7 +164,8 @@ class Service:
     return {
       'User-Agent': self.config.user_agent,
       'Origin': self.config.origin,
-      'Authorization': 'Bearer {}'.format(self.config.auth)
+      'Authorization': 'Bearer {}'.format(self.config.auth),
+      'Content-Type': 'application/json'
     }
 
   def build_request_body(self, opcode, intent):

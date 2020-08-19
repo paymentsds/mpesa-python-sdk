@@ -8,8 +8,9 @@ class Response:
             data['output_ResponseDesc']
         )
 
-        self.data = namedtuple('ResponseData' , 'transaction conversation reference')(
-            data['output_TransactionID'],
-            data['output_ConversationID'],
-            data['output_ThirdPartyReference']
-        )
+        self.data = {#namedtuple('ResponseData' , 'transaction conversation reference')(
+            # 'transaction': data['output_TransactionID'],
+            'conversation': data['output_ConversationID'],
+            'reference': data['output_ThirdPartyReference']
+        }#)
+        if hasattr(data, 'output_TransactionID'): self.data['transaction'] = data['output_TransactionID']
