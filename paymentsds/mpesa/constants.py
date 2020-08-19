@@ -98,32 +98,32 @@ DEFAULT_OPERATIONS = {
       'path':'/ipg/v1x/reversal/',
       'mapping': {
         'to': 'input_ServiceProviderCode',
-        'amount': 'input_Amount',
+        'amount': 'input_ReversalAmount',
         'transaction': 'input_TransactionID',
         'reference': 'input_ThirdPartyReference',
-        'securityCredential': 'input_SecurityCredential',
-        'initiatorIdentifier': 'input_InitiatorIdentifier'
+        'security_credential': 'input_SecurityCredential',
+        'initiator_identifier': 'input_InitiatorIdentifier'
       },
       'validation': {
         'to': PATTERNS['SERVICE_PROVIDER_CODE'],
         'amount': PATTERNS['MONEY_AMOUNT'],
         'transaction': PATTERNS['WORD'],
         'reference': PATTERNS['WORD'],
-        'securityCredential': PATTERNS['WORD'],
-        'initiatorIdentifier': PATTERNS['WORD']
+        'security_credential': PATTERNS['WORD'],
+        'initiator_identifier': PATTERNS['WORD']
       },
       'required': [
         'to',
         'amount',
         'transaction',
         'reference',
-        'securityCredential',
-        'initiatorIdentifier'
+        'security_credential',
+        'initiator_identifier'
       ],
       'optional': [
         'to',
-        'securityCredential',
-        'initiatorIdentifier'
+        'security_credential',
+        'initiator_identifier'
       ]
   },
   'QUERY_TRANSACTION_STATUS': {
@@ -131,14 +131,14 @@ DEFAULT_OPERATIONS = {
       'port':'18353',
       'path':'/ipg/v1x/queryTransactionStatus/',
       'mapping': {
-        'from': PATTERNS['SERVICE_PROVIDER_CODE'],
-        'subject': PATTERNS['WORD'],
-        'reference': PATTERNS['WORD']
-      },
-      'validation': {
         'from': 'input_ServiceProviderCode',
         'subject': 'input_QueryReference',
         'reference': 'input_ThirdPartyReference'
+      },
+      'validation': {
+       'from': PATTERNS['SERVICE_PROVIDER_CODE'],
+        'subject': PATTERNS['WORD'],
+        'reference': PATTERNS['WORD']
       },
       'required': [
         'from',
