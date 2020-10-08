@@ -26,7 +26,7 @@ class Configuration:
     self.timeout = 0
     self.verify_ssl = False
     self.debugging = True
-    self.environment = Environment.from_url(Environment.SANDBOX),
+    self.environment = Environment.from_url(Environment.SANDBOX)
     self.origin = '*'
 
     for key, value in kwargs.items():
